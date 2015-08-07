@@ -10,6 +10,13 @@ Command-line tools based on this library:
   * [clip](https://github.com/vurdalakov/dostools/wiki/clip) - works with Windows Clipboard
   * [clp](https://github.com/vurdalakov/dostools/wiki/clp) - saves, restores and parses Windows Clipboard files (.CLP)
 
+#### Clipboard listener
+
+```csharp
+    var clipboardListener = new ClipboardListener();
+    clipboardListener.ClipboardUpdated += (s, e) => Refresh();
+```
+
 #### CLP file methods
 
 ##### Parse CLP file

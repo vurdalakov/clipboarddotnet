@@ -7,7 +7,17 @@
     {
         public ClipboardApi()
         {
-            ClipboardApiException.ThrowIfFailed(!Win32Api.OpenClipboard(IntPtr.Zero), "OpenClipboard");
+            for (var i = 0; i < 5; i++) // sometimes OpenClipboard fails with error 5; retry after small delay always helps
+            {
+                if (Win32Api.OpenClipboard(IntPtr.Zero))
+                {
+                    return;
+                }
+
+                System.Threading.Thread.Sleep(100);
+            }
+
+            ClipboardApiException.ThrowIfFailed(true, "OpenClipboard");
         }
 
         public void Dispose()

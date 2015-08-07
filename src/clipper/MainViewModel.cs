@@ -28,19 +28,14 @@
 
         public String HexData { get; private set; }
 
+        private ClipboardListener _clipboardListener = new ClipboardListener();
+
         public MainViewModel()
         {
             Entries = new ThreadSafeObservableCollection<EntryViewModel>();
 
-            _clipboardListener.ClipboardUpdate += OnClipboardUpdate;
+            _clipboardListener.ClipboardUpdated += (s, e) => Refresh();
         }
-
-        private void OnClipboardUpdate(Object sender, EventArgs e)
-        {
-            Refresh();
-        }
-
-        private ClipboardListener _clipboardListener = new ClipboardListener();
 
         public void OnLoaded()
         {

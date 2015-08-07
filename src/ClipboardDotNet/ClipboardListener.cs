@@ -25,7 +25,7 @@
             Dispose(true);
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing && _listening)
             {
@@ -36,13 +36,13 @@
             base.Dispose(disposing);
         }
 
-        public event EventHandler<EventArgs> ClipboardUpdate;
+        public event EventHandler<EventArgs> ClipboardUpdated;
 
         protected override IntPtr OnWindowProc(IntPtr hWnd, UInt32 msg, UIntPtr wParam, IntPtr lParam)
         {
-            if ((WM_CLIPBOARDUPDATE == msg) && (ClipboardUpdate != null))
+            if ((WM_CLIPBOARDUPDATE == msg) && (ClipboardUpdated != null))
             {
-                ClipboardUpdate(this, new EventArgs());
+                ClipboardUpdated(this, new EventArgs());
             }
 
             return base.OnWindowProc(hWnd, msg, wParam, lParam);
