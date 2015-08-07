@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Vurdalakov.ClipboardDotNet"
         mc:Ignorable="d"
-        Title="Clipper" Height="600" Width="800">
+        Title="Clipper" Height="600" Width="900">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -68,5 +68,13 @@
                 </GridView>
             </ListView.View>
         </ListView>
+
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding HexData}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" FontFamily="Courier New" />
+        
+        <!--<ScrollViewer Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TextBox IsReadOnly="True" >
+                
+            </TextBox>
+        </ScrollViewer>-->
     </Grid>
 </Window>
