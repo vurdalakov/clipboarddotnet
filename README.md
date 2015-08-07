@@ -6,11 +6,11 @@ Project is distributed under the [MIT license](http://opensource.org/licenses/MI
 
 Copyright © 2015 [Vurdalakov](http://www.vurdalakov.net).
 
-##### CLP file methods
+#### CLP file methods
 
-###### Parse CLP file
+##### Parse CLP file
 
-```
+```csharp
     var entries = ClipboardFile.Parse(@"c:\temp\clipboard.clp");
 
     foreach (var entry in entries)
@@ -19,9 +19,9 @@ Copyright © 2015 [Vurdalakov](http://www.vurdalakov.net).
     }
 ```
 
-###### Extract text from CLP file
+##### Extract text from CLP file
 
-```
+```csharp
     var text = ClipboardFile.GetText(@"c:\temp\clipboard.clp");
     if (text != null)
     {
@@ -29,14 +29,14 @@ Copyright © 2015 [Vurdalakov](http://www.vurdalakov.net).
     }
 ```
 
-###### Restore Clipboard from CLP file
+##### Restore Clipboard from CLP file
 
-```
+```csharp
     ClipboardFile.Restore(@"c:\temp\clipboard.clp");
 ```
 
-###### Save Clipboard content to CLP file
+##### Save Clipboard content to CLP file
 
-```
+```csharp
     ClipboardFile.Save(@"c:\temp\clipboard.clp");
 ```
