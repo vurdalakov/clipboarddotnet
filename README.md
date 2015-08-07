@@ -1,10 +1,102 @@
 # ClipboardDotNet
 
-`ClipboardDotNet` is a .NET library that works with Windows Clipboard and CLP files.
+`ClipboardDotNet` is a .NET library that works with Windows Clipboard and .CLP files.
 
 Project is distributed under the [MIT license](http://opensource.org/licenses/MIT).
 
 Copyright © 2015 [Vurdalakov](http://www.vurdalakov.net).
+
+#### Clipboard methods
+
+##### Empty Clipboard
+
+```csharp
+    Clipboard.Empty();
+```
+
+##### Get number of available formats
+
+```csharp
+    var count = Clipboard.CountFormats();
+```
+
+##### Check if format is  available
+
+```csharp
+    if (Clipboard.IsFormatAvailable(ClipboardFormats.CF_UNICODETEXT))
+    {
+        Console.WriteLine("Unicode text is available");
+    }
+```
+
+##### Get available formats
+
+```csharp
+    var entries = Clipboard.GetEntries();
+
+    foreach (var entry in entries)
+    {
+        Console.WriteLine("{0} {1} {2}", entry.Format, entry.DataSize, entry.Name);
+    }
+```
+
+##### Get available format IDs
+
+```csharp
+    var formats = Clipboard.GetFormats();
+
+    foreach (var format in formats)
+    {
+        Console.WriteLine("{0}", format);
+    }
+```
+
+##### Get format name
+
+```csharp
+    if (Clipboard.CountFormats() > 0)
+    {
+        var format = Clipboard.GetFormats()[0];
+        var name = Clipboard.GetFormatName(format);
+    }
+```
+
+##### Get format data size
+
+```csharp
+    if (Clipboard.CountFormats() > 0)
+    {
+        var format = Clipboard.GetFormats()[0];
+        var dataSize = Clipboard.GetDataSize(format);
+    }
+```
+
+##### Get format data
+
+```csharp
+    if (Clipboard.CountFormats() > 0)
+    {
+        var format = Clipboard.GetFormats()[0];
+        var data = Clipboard.GetData(format);
+        File.WriteAllBytes(@"c:\temp\clipboard.clp", data);
+    }
+```
+
+##### Get text from Clipboard
+
+```csharp
+    var text = Clipboard.GetText();
+    Console.WriteLine("{0}", text);
+```
+
+##### Set format data
+
+```csharp
+    var data = File.ReadAllBytes(@"c:\temp\clipboard.clp");
+
+    Clipboard.Empty();
+    Clipboard.SetData(ClipboardFormats.CF_BITMAP, data);
+```
 
 #### CLP file methods
 
