@@ -31,6 +31,27 @@
         public MainViewModel()
         {
             Entries = new ThreadSafeObservableCollection<EntryViewModel>();
+
+            _clipboardListener.ClipboardUpdate += OnClipboardUpdate;
+        }
+
+        private void OnClipboardUpdate(Object sender, EventArgs e)
+        {
+            Refresh();
+        }
+
+        private ClipboardListener _clipboardListener = new ClipboardListener();
+
+        public void OnLoaded()
+        {
+            _clipboardListener.Start();
+
+            Refresh();
+        }
+
+        public void OnClosing()
+        {
+            _clipboardListener.Stop();
         }
 
         public void Refresh()

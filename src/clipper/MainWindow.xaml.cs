@@ -12,13 +12,19 @@
             InitializeComponent();
 
             this.Loaded += this.OnMainWindowLoaded;
+            this.Closing += OnMainWindowClosing;
         }
 
         private void OnMainWindowLoaded(Object sender, RoutedEventArgs e)
         {
             this.DataContext = this.mainViewModel;
 
-            this.mainViewModel.Refresh();
+            this.mainViewModel.OnLoaded();
+        }
+
+        private void OnMainWindowClosing(Object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.mainViewModel.OnClosing();
         }
     }
 }
