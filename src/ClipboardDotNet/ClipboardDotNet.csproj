@@ -45,9 +45,11 @@
     <Compile Include="ClipboardFile.cs" />
     <Compile Include="ClipboardFileReader.cs" />
     <Compile Include="ClipboardFormats.cs" />
+    <Compile Include="ClipboardListener.cs" />
     <Compile Include="ClipboardText.cs" />
     <Compile Include="GlobalMemory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Vurdalakov\MessageOnlyWindow.cs" />
     <Compile Include="Win32Api.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
