@@ -48,7 +48,7 @@
 
         protected override void Help()
         {
-            Console.WriteLine("CLP file {0} | https://github.com/vurdalakov/dostools\n", ApplicationVersion);
+            Console.WriteLine("CLP {0} | https://github.com/vurdalakov/dostools\n", ApplicationVersion);
             Console.WriteLine("Saves, restores and parses Windows Clipboard files (CLP).\n");
             Console.WriteLine("Usage:\n\tclp <filename> <-command> [-silent]\n");
             Console.WriteLine("Commands:\n\t-parse - parses CLP file\n\t-text - extracts text from CLP file\n\t-save - saves Clipboard to CLP file\n\t-restore - restores Clipboard from CLP file\n");
