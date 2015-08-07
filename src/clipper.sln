@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipboardDotNet", "Clipboar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clp", "clp\clp.csproj", "{C90040C7-8A04-465A-9B70-478D64FD8AD2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clipper", "clipper\clipper.csproj", "{3E08E50A-CE3B-428A-846C-CDB533AC7742}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C90040C7-8A04-465A-9B70-478D64FD8AD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C90040C7-8A04-465A-9B70-478D64FD8AD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C90040C7-8A04-465A-9B70-478D64FD8AD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E08E50A-CE3B-428A-846C-CDB533AC7742}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E08E50A-CE3B-428A-846C-CDB533AC7742}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E08E50A-CE3B-428A-846C-CDB533AC7742}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E08E50A-CE3B-428A-846C-CDB533AC7742}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
