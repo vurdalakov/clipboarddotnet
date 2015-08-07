@@ -51,18 +51,27 @@
 
         public void Refresh()
         {
+            var selectedFormat = null == SelectedEntry ? 0 : SelectedEntry.Format;
+
             Entries.Clear();
+            SelectedEntry = null;
 
             var entries = Clipboard.GetEntries();
 
+            var selectedIndex = 0;
             foreach (var entry in entries)
             {
                 Entries.Add(new EntryViewModel(entry));
+
+                if (entry.Format == selectedFormat)
+                {
+                    selectedIndex = Entries.Count - 1;
+                }
             }
 
-            if (Entries.Count > 0)
+            if (Entries.Count > selectedIndex)
             {
-                SelectedEntry = Entries[0];
+                SelectedEntry = Entries[selectedIndex];
             }
         }
 
