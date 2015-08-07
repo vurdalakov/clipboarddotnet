@@ -6,6 +6,10 @@ Project is distributed under the [MIT license](http://opensource.org/licenses/MI
 
 Copyright © 2015 [Vurdalakov](http://www.vurdalakov.net).
 
+Command-line tools based on this library:
+  * [clip](https://github.com/vurdalakov/dostools/wiki/clip) - works with Windows Clipboard
+  * [clp](https://github.com/vurdalakov/dostools/wiki/clp) - saves, restores and parses Windows Clipboard files (.CLP)
+
 #### CLP file methods
 
 ##### Parse CLP file
