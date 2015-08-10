@@ -94,7 +94,7 @@
             </ListView.View>
         </ListView>
 
-        <ListView Grid.Row="2" Grid.Column="1" ItemsSource="{Binding HexLines}" FontFamily="Courier New" SelectionMode="Single">
+        <ListView Grid.Row="2" Grid.Column="1" ItemsSource="{Binding HexLines}" FontFamily="Courier New" SelectionMode="Single" Visibility="{Binding IsTextFormat, Converter={StaticResource BooleanToVisibilityReverseConverter}}">
             <ListView.View>
                 <GridView AllowsColumnReorder="False">
                     <GridViewColumn Header="Offset" Width="Auto">
@@ -121,6 +121,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
+
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Text}" FontFamily="Courier New" TextWrapping="Wrap" Visibility="{Binding IsTextFormat, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
         <StatusBar Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
             <StatusBarItem>

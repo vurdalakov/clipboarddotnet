@@ -31,11 +31,10 @@
             String text = null;
             reader.EntryRead += (s, e) =>
             {
-                var clipboardFormat = (ClipboardFormats)e.Entry.Format;
-                if (ClipboardText.IsTextFormat(clipboardFormat))
+                if (ClipboardText.IsTextFormat(e.Entry.Format))
                 {
                     var data = reader.ReadData();
-                    text = ClipboardText.ExtractText(clipboardFormat, data);
+                    text = ClipboardText.ExtractText(e.Entry.Format, data);
                     e.Cancel = true;
                 }
             };

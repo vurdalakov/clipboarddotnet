@@ -73,12 +73,12 @@ namespace Vurdalakov.ClipboardDotNet
             }
 
             // standard Clipboard formats
-            var clipboardStandardFormats = Enum.GetValues(typeof(ClipboardFormats));
-            foreach (ClipboardFormats clipboardStandardFormat in clipboardStandardFormats)
+            var standardFormats = Enum.GetValues(typeof(ClipboardFormats));
+            foreach (var standardFormat in standardFormats)
             {
-                if ((UInt16)clipboardStandardFormat == format)
+                if ((UInt16)standardFormat == format)
                 {
-                    return clipboardStandardFormat.ToString();
+                    return standardFormat.ToString();
                 }
             }
 
@@ -117,11 +117,10 @@ namespace Vurdalakov.ClipboardDotNet
 
             foreach (var format in formats)
             {
-                var clipboardFormat = (ClipboardFormats)format;
-                if (ClipboardText.IsTextFormat(clipboardFormat))
+                if (ClipboardText.IsTextFormat(format))
                 {
                     var data = Clipboard.GetData(format);
-                    return ClipboardText.ExtractText(clipboardFormat, data);
+                    return ClipboardText.ExtractText(format, data);
                 }
             }
 

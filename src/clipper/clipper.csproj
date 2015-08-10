@@ -68,6 +68,7 @@
     <Compile Include="HexLineConverter.cs" />
     <Compile Include="HexLineViewModel.cs" />
     <Compile Include="MainViewModel.cs" />
+    <Compile Include="Vurdalakov\BooleanToVisibilityConverter.cs" />
     <Compile Include="Vurdalakov\CommandBase.cs" />
     <Compile Include="Vurdalakov\CommandBaseGeneric.cs" />
     <Compile Include="Vurdalakov\ThreadSafeObservableCollection.cs" />

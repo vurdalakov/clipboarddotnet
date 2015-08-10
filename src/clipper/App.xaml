@@ -2,8 +2,10 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Vurdalakov.ClipboardDotNet"
+             xmlns:vurdalakov="clr-namespace:Vurdalakov"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <vurdalakov:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <vurdalakov:BooleanToVisibilityConverter Reverse="True" x:Key="BooleanToVisibilityReverseConverter" />
     </Application.Resources>
 </Application>

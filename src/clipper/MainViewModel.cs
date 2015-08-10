@@ -24,12 +24,18 @@
                     _selectedEntry = value;
                     this.OnPropertyChanged(() => SelectedEntry);
 
-                    UpdateHexData();
+                    IsTextFormat = (_selectedEntry != null) && ClipboardText.IsTextFormat(_selectedEntry.Format);
+                    this.OnPropertyChanged(() => IsTextFormat);
+
+                    UpdateData();
                 }
             }
         }
 
+        public Boolean IsTextFormat { get; private set; }
+
         public ThreadSafeObservableCollection<HexLineViewModel> HexLines { get; private set; }
+        public String Text { get; private set; }
 
         public String SequenceNumber { get; private set; }
 
@@ -95,9 +101,10 @@
 
         private Byte[] _data;
 
-        public void UpdateHexData()
+        private void UpdateData()
         {
             HexLines.Clear();
+            Text = "";
 
             if (null == _selectedEntry)
             {
@@ -111,15 +118,24 @@
                 return;
             }
 
-            var offset = 0;
-
-            var remaining = _data.Length;
-            while (remaining > 0)
+            if (IsTextFormat)
             {
-                HexLines.Add(new HexLineViewModel(offset, this));
+                var data = Clipboard.GetData(_selectedEntry.Format);
+                Text = ClipboardText.ExtractText(_selectedEntry.Format, data);
+                OnPropertyChanged(() => Text);
+            }
+            else
+            {
+                var offset = 0;
 
-                offset += 16;
-                remaining -= 16;
+                var remaining = _data.Length;
+                while (remaining > 0)
+                {
+                    HexLines.Add(new HexLineViewModel(offset, this));
+
+                    offset += 16;
+                    remaining -= 16;
+                }
             }
         }
 
@@ -167,7 +183,7 @@
                 return;
             }
 
-            var isText = ClipboardText.IsTextFormat((ClipboardFormats)_selectedEntry.Format);
+            var isText = ClipboardText.IsTextFormat(_selectedEntry.Format);
 
             var saveFileDialog = new SaveFileDialog();
             saveFileDialog.DefaultExt = isText ? ".txt" : ".bin";
@@ -241,7 +257,7 @@
         public ICommand AboutCommand { get; private set; }
         public void OnAboutCommand()
         {
-            MessageBox.Show("Clipper 2.0\n\nCopyright @ 2015 Vurdalakov\n\nhttp://www.vurdalakov.net/\nvurdalakov@gmail.com", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Clipper 2.0\n\nCopyright @ 1997, 2015 Vurdalakov\n\nhttp://www.vurdalakov.net/\nvurdalakov@gmail.com", "About", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
