@@ -136,6 +136,17 @@ namespace Vurdalakov.ClipboardDotNet
             }
         }
 
+        static public void SetText(String text)
+        {
+            Clipboard.Empty();
+
+            using (var clipboard = new ClipboardApi())
+            {
+                var data = Encoding.Unicode.GetBytes(text + "\0");
+                clipboard.SetData((UInt16)ClipboardFormats.CF_UNICODETEXT, data);
+            }
+        }
+
         static public UInt32 GetSequenceNumber()
         {
             return Win32Api.GetClipboardSequenceNumber();

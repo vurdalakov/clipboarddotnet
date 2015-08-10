@@ -46,6 +46,7 @@
             this.RestoreCommand = new CommandBase(OnRestoreCommand);
             this.SaveFormatCommand = new CommandBase(OnSaveFormatCommand);
             this.ExitCommand = new CommandBase(OnExitCommand);
+            this.CopyCommand = new CommandBase<String>(OnCopyCommand);
             this.EmptyCommand = new CommandBase(OnEmptyCommand);
             this.RefreshCommand = new CommandBase(OnRefreshCommand);
             this.AboutCommand = new CommandBase(OnAboutCommand);
@@ -201,6 +202,28 @@
         public void OnExitCommand()
         {
             Application.Current.Shutdown();
+        }
+
+        public ICommand CopyCommand { get; private set; }
+        public void OnCopyCommand(String source)
+        {
+            if (null == _selectedEntry)
+            {
+                return;
+            }
+
+            switch (source)
+            {
+                case "1":
+                    Clipboard.SetText(_selectedEntry.Format.ToString());
+                    break;
+                case "2":
+                    Clipboard.SetText(_selectedEntry.DataSize.ToString());
+                    break;
+                case "3":
+                    Clipboard.SetText(_selectedEntry.Name);
+                    break;
+            }
         }
 
         public ICommand EmptyCommand { get; private set; }
