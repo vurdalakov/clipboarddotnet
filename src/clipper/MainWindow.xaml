@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Vurdalakov.ClipboardDotNet"
         mc:Ignorable="d"
-        Title="Clipper" Height="600" Width="900">
+        Title="Clipper 2" Height="600" Width="900">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -31,7 +31,7 @@
             </ToolBarPanel>
         </DockPanel>
 
-        <ListView Grid.Row="2" Grid.Column="0" ItemsSource="{Binding Entries}" SelectedItem="{Binding SelectedEntry, Mode=TwoWay}" ScrollViewer.CanContentScroll="False" Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}}">
+        <ListView Grid.Row="2" Grid.Column="0" ItemsSource="{Binding Entries}" SelectedItem="{Binding SelectedEntry, Mode=TwoWay}" ScrollViewer.CanContentScroll="False" Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}}" SelectionMode="Single">
             <ListView.ContextMenu>
                 <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
                     <MenuItem Header="Copy VID" Command="{Binding PlacementTarget.Tag.CopyCommand, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}" CommandParameter="1001"/>
@@ -69,7 +69,7 @@
             </ListView.View>
         </ListView>
 
-        <ListView Grid.Row="2" Grid.Column="1" ItemsSource="{Binding HexLines}" FontFamily="Courier New">
+        <ListView Grid.Row="2" Grid.Column="1" ItemsSource="{Binding HexLines}" FontFamily="Courier New" SelectionMode="Single">
             <ListView.View>
                 <GridView AllowsColumnReorder="False">
                     <GridViewColumn Header="Offset" Width="Auto">

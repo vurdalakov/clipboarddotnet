@@ -2,15 +2,23 @@
 {
     using System;
 
+    public interface IHexLineDataSource
+    {
+        Byte[] GetData(Int32 offset);
+    }
+
     public class HexLineViewModel : ViewModelBase
     {
-        public Int32 Offset { get; private set; }
-        public Byte[] Data { get; private set; }
+        private IHexLineDataSource _dataSource;
 
-        public HexLineViewModel(Int32 offset, Byte[] data)
+        public Int32 Offset { get; private set; }
+
+        public Byte[] Data { get { return _dataSource.GetData(Offset); } }
+
+        public HexLineViewModel(Int32 offset, IHexLineDataSource dataSource)
         {
             Offset = offset;
-            Data = data;
+            _dataSource = dataSource;
         }
     }
 }

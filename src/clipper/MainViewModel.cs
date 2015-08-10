@@ -5,7 +5,7 @@
     using System.Text;
     using System.Windows.Controls;
 
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase, IHexLineDataSource
     {
         public ThreadSafeObservableCollection<EntryViewModel> Entries { get; private set; }
 
@@ -83,6 +83,8 @@
             this.OnPropertyChanged(() => SequenceNumber);
         }
 
+        private Byte[] _data;
+
         public void UpdateHexData()
         {
             HexLines.Clear();
@@ -92,27 +94,31 @@
                 return;
             }
 
-            var data = Clipboard.GetData(_selectedEntry.Format);
+            _data = Clipboard.GetData(_selectedEntry.Format);
 
-            if (0 == data.Length)
+            if (0 == _data.Length)
             {
                 return;
             }
 
             var offset = 0;
 
-            var remaining = data.Length;
+            var remaining = _data.Length;
             while (remaining > 0)
             {
-                var line = new Byte[Math.Min(remaining, 16)];
-
-                Array.Copy(data, offset, line, 0, line.Length);
-
-                HexLines.Add(new HexLineViewModel(offset, line));
+                HexLines.Add(new HexLineViewModel(offset, this));
 
                 offset += 16;
                 remaining -= 16;
             }
+        }
+
+        public Byte[] GetData(Int32 offset)
+        {
+            var line = new Byte[Math.Min(_data.Length - offset, 16)];
+            Array.Copy(_data, offset, line, 0, line.Length);
+
+            return line;
         }
     }
 }
