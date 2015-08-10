@@ -23,13 +23,19 @@
                 <ToolBar ToolBarTray.IsLocked="True">
                     <Menu ToolBar.OverflowMode="Never">
                         <MenuItem Header="_File">
+                            <MenuItem Header="_Save Clipboard..." Command="{Binding SaveCommand}" />
+                            <MenuItem Header="_Restore Clipboard..." Command="{Binding RestoreCommand}" />
+                            <Separator/>
                             <MenuItem Header="E_xit" Command="{Binding ExitCommand}" />
+                        </MenuItem>
+                        <MenuItem Header="_Edit">
+                            <MenuItem Header="_Empty Clipboard" Command="{Binding EmptyCommand}" />
                         </MenuItem>
                         <MenuItem Header="_View">
                             <MenuItem Header="_Refresh" Command="{Binding RefreshCommand}" />
                         </MenuItem>
                         <MenuItem Header="_Help">
-                            <MenuItem Header="_About" Command="{Binding AboutCommand}" />
+                            <MenuItem Header="_About..." Command="{Binding AboutCommand}" />
                         </MenuItem>
                     </Menu>
                 </ToolBar>

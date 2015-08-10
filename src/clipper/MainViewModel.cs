@@ -3,6 +3,7 @@
     using System;
     using System.Windows;
     using System.Windows.Input;
+    using Microsoft.Win32;
 
     public class MainViewModel : ViewModelBase, IHexLineDataSource
     {
@@ -40,6 +41,9 @@
 
             _clipboardListener.ClipboardUpdated += (s, e) => Refresh();
 
+            this.SaveCommand = new CommandBase(OnSaveCommand);
+            this.RestoreCommand = new CommandBase(OnRestoreCommand);
+            this.EmptyCommand = new CommandBase(OnEmptyCommand);
             this.ExitCommand = new CommandBase(OnExitCommand);
             this.RefreshCommand = new CommandBase(OnRefreshCommand);
             this.AboutCommand = new CommandBase(OnAboutCommand);
@@ -122,6 +126,40 @@
             Array.Copy(_data, offset, line, 0, line.Length);
 
             return line;
+        }
+
+        public ICommand SaveCommand { get; private set; }
+        public void OnSaveCommand()
+        {
+            var saveFileDialog = new SaveFileDialog();
+            saveFileDialog.DefaultExt = ".clp";
+            saveFileDialog.Filter = "Clipboard File|*.clp";
+
+            if (true == saveFileDialog.ShowDialog())
+            {
+                var fileName = saveFileDialog.FileName;
+                ClipboardFile.Save(fileName);
+            }
+        }
+
+        public ICommand RestoreCommand { get; private set; }
+        public void OnRestoreCommand()
+        {
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.DefaultExt = ".clp";
+            openFileDialog.Filter = "Clipboard File|*.clp";
+
+            if (true == openFileDialog.ShowDialog())
+            {
+                var fileName = openFileDialog.FileName;
+                ClipboardFile.Restore(fileName);
+            }
+        }
+
+        public ICommand EmptyCommand { get; private set; }
+        public void OnEmptyCommand()
+        {
+            Clipboard.Empty();
         }
 
         public ICommand ExitCommand { get; private set; }
