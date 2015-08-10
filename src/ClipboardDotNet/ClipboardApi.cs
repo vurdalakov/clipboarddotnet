@@ -37,22 +37,18 @@
         public Byte[] GetData(UInt16 format)
         {
             var ptr = GetDataPtr(format);
-            return GlobalMemory.GetData(ptr);
+            return IntPtr.Zero == ptr ? new Byte[0] : GlobalMemory.GetData(ptr);
         }
 
         public UInt64 GetDataSize(UInt16 format)
         {
             var ptr = GetDataPtr(format);
-            return GlobalMemory.GetDataSize(ptr);
+            return IntPtr.Zero == ptr ? 0 : GlobalMemory.GetDataSize(ptr);
         }
 
         private IntPtr GetDataPtr(UInt16 format)
         {
-            var ptr = Win32Api.GetClipboardData(format);
-
-            ClipboardApiException.ThrowIfFailed(IntPtr.Zero == ptr, "GetClipboardData");
-
-            return ptr;
+            return Win32Api.GetClipboardData(format);
         }
 
         public void SetData(UInt16 format, Byte[] data)

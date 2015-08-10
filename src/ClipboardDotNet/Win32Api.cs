@@ -6,31 +6,6 @@ namespace Vurdalakov.ClipboardDotNet
 {
     internal class Win32Api
     {
-        // kernel32.dll
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        static public extern IntPtr GlobalLock(IntPtr hMem);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        static public extern UIntPtr GlobalSize(IntPtr hMem);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        static public extern Boolean GlobalUnlock(IntPtr hMem);
-
-        // kernel32.dll - NOT USED YET
-
-        [DllImport("kernel32.dll", EntryPoint = "RtlMoveMemory", SetLastError = false)]
-        public static extern void CopyMemory(IntPtr dest, IntPtr src, int size);
-
-        [DllImport("kernel32.dll")]
-        public static extern IntPtr GlobalAlloc(uint uFlags, UIntPtr dwBytes);
-
-        [DllImport("kernel32.dll")]
-        public static extern IntPtr GlobalFree(IntPtr hMem);
-
-        public const uint GMEM_DDESHARE = 0x2000;
-        public const uint GMEM_MOVEABLE = 0x2;
-
         // user32.dll
 
         public const UInt32 CF_PRIVATEFIRST = 0x0200;
