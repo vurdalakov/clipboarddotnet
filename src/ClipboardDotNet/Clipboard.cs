@@ -57,13 +57,19 @@ namespace Vurdalakov.ClipboardDotNet
             return formats.ToArray();
         }
 
+        static public String GetRegisteredFormatName(UInt16 format)
+        {
+            var stringBuilder = new StringBuilder(256);
+            return Win32Api.GetClipboardFormatName(format, stringBuilder, stringBuilder.Capacity) > 0 ? stringBuilder.ToString() : null;
+        }
+
         static public String GetFormatName(UInt16 format)
         {
             // registered Clipboard formats
-            var stringBuilder = new StringBuilder(256);
-            if (Win32Api.GetClipboardFormatName(format, stringBuilder, stringBuilder.Capacity) > 0)
+            var name = GetRegisteredFormatName(format);
+            if (name != null)
             {
-                return stringBuilder.ToString();
+                return name;
             }
 
             // standard Clipboard formats

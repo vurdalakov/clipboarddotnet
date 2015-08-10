@@ -2,7 +2,7 @@
 {
     using System;
 
-    public enum ClipboardFormats : UInt32
+    public enum ClipboardFormats : UInt16
     {
         CF_TEXT = 1,
         CF_BITMAP = 2,

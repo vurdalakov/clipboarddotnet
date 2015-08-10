@@ -6,9 +6,10 @@ Project is distributed under the [MIT license](http://opensource.org/licenses/MI
 
 Copyright © 2015 [Vurdalakov](http://www.vurdalakov.net).
 
-Command-line tools based on this library:
-  * [clip](https://github.com/vurdalakov/dostools/wiki/clip) - works with Windows Clipboard
-  * [clp](https://github.com/vurdalakov/dostools/wiki/clp) - saves, restores and parses Windows Clipboard files (.CLP)
+Tools based on this library:
+  * clipper - yet another Windows Clipboard viewer;
+  * [clip](https://github.com/vurdalakov/dostools/wiki/clip) - command-line tool that works with Windows Clipboard;
+  * [clp](https://github.com/vurdalakov/dostools/wiki/clp) - command-line tool that saves, restores and parses Windows Clipboard files (.CLP).
 
 #### Clipboard listener
 
@@ -58,6 +59,12 @@ Command-line tools based on this library:
 
 ```csharp
     Clipboard.Empty();
+```
+
+##### Get the Clipboard sequence number
+
+```csharp
+    var sequenceNumber = Clipboard.GetClipboardSequenceNumber();
 ```
 
 ##### Get number of available formats
@@ -142,4 +149,18 @@ Command-line tools based on this library:
 
     Clipboard.Empty();
     Clipboard.SetData(ClipboardFormats.CF_BITMAP, data);
+```
+
+##### List all registered Clipboard formats
+
+```csharp
+    for (var id = UInt16.MinValue; id < UInt16.MaxValue; id++)
+    {
+        var name = Clipboard.GetRegisteredFormatName(id);
+
+        if (name != null)
+        {
+            Console.WriteLine("{0} {1}", id, name);
+        }
+    }
 ```
