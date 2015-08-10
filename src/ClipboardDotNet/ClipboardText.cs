@@ -3,17 +3,21 @@
     using System;
     using System.Text;
 
-    internal static class ClipboardText
+    public static class ClipboardText
     {
         static public Boolean IsTextFormat(ClipboardFormats format)
         {
-            return
-                (ClipboardFormats.CF_UNICODETEXT == format) ||
-                (ClipboardFormats.CF_TEXT == format) ||
-                (ClipboardFormats.CF_OEMTEXT == format);
+            if ((ClipboardFormats.CF_UNICODETEXT == format) || (ClipboardFormats.CF_TEXT == format) || (ClipboardFormats.CF_OEMTEXT == format))
+            {
+                return true;
+            }
+
+            var name = Clipboard.GetFormatName((UInt16)format);
+
+            return name.Equals("Rich Text Format", StringComparison.CurrentCultureIgnoreCase) || name.Equals("HTML Format", StringComparison.CurrentCultureIgnoreCase);
         }
 
-        static public String ExtractText(ClipboardFormats format, Byte[] data)
+        static internal String ExtractText(ClipboardFormats format, Byte[] data)
         {
             switch (format)
             {

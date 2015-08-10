@@ -26,6 +26,8 @@
                             <MenuItem Header="_Save Clipboard..." Command="{Binding SaveCommand}" />
                             <MenuItem Header="_Restore Clipboard..." Command="{Binding RestoreCommand}" />
                             <Separator/>
+                            <MenuItem Header="Save Selected Format..." Command="{Binding SaveFormatCommand}" />
+                            <Separator/>
                             <MenuItem Header="E_xit" Command="{Binding ExitCommand}" />
                         </MenuItem>
                         <MenuItem Header="_Edit">

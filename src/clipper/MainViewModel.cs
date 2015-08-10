@@ -1,6 +1,7 @@
 ﻿namespace Vurdalakov.ClipboardDotNet
 {
     using System;
+    using System.IO;
     using System.Windows;
     using System.Windows.Input;
     using Microsoft.Win32;
@@ -43,8 +44,9 @@
 
             this.SaveCommand = new CommandBase(OnSaveCommand);
             this.RestoreCommand = new CommandBase(OnRestoreCommand);
-            this.EmptyCommand = new CommandBase(OnEmptyCommand);
+            this.SaveFormatCommand = new CommandBase(OnSaveFormatCommand);
             this.ExitCommand = new CommandBase(OnExitCommand);
+            this.EmptyCommand = new CommandBase(OnEmptyCommand);
             this.RefreshCommand = new CommandBase(OnRefreshCommand);
             this.AboutCommand = new CommandBase(OnAboutCommand);
         }
@@ -156,16 +158,55 @@
             }
         }
 
-        public ICommand EmptyCommand { get; private set; }
-        public void OnEmptyCommand()
+        public ICommand SaveFormatCommand { get; private set; }
+        public void OnSaveFormatCommand()
         {
-            Clipboard.Empty();
+            if (null == _selectedEntry)
+            {
+                return;
+            }
+
+            var isText = ClipboardText.IsTextFormat((ClipboardFormats)_selectedEntry.Format);
+
+            var saveFileDialog = new SaveFileDialog();
+            saveFileDialog.DefaultExt = isText ? ".txt" : ".bin";
+            saveFileDialog.Filter = isText ? "Text File|*.txt" : "Binary File|*.bin";
+
+            if (true == saveFileDialog.ShowDialog())
+            {
+                var fileName = saveFileDialog.FileName;
+
+                using (var fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    using (var binaryWriter = new BinaryWriter(fileStream))
+                    {
+                        var data = Clipboard.GetData(_selectedEntry.Format);
+
+                        var count = data.Length;
+                        if (isText)
+                        {
+                            while ((count > 0) && ('\0' == data[count - 1]))
+                            {
+                                count--;
+                            }
+                        }
+
+                        binaryWriter.Write(data, 0, count);
+                    }
+                }
+            }
         }
 
         public ICommand ExitCommand { get; private set; }
         public void OnExitCommand()
         {
             Application.Current.Shutdown();
+        }
+
+        public ICommand EmptyCommand { get; private set; }
+        public void OnEmptyCommand()
+        {
+            Clipboard.Empty();
         }
 
         public ICommand RefreshCommand { get; private set; }
