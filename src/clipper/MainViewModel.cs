@@ -1,7 +1,9 @@
 ﻿namespace Vurdalakov.ClipboardDotNet
 {
     using System;
+    using System.Collections.Generic;
     using System.Text;
+    using System.Windows.Controls;
 
     public class MainViewModel : ViewModelBase
     {
@@ -26,22 +28,7 @@
             }
         }
 
-        private String _hexData;
-        public String HexData
-        {
-            get
-            {
-                return _hexData;
-            }
-            set
-            {
-                if (_hexData != value)
-                {
-                    _hexData = value;
-                    this.OnPropertyChanged(() => HexData);
-                }
-            }
-        }
+        public ThreadSafeObservableCollection<HexLineViewModel> HexLines { get; private set; }
 
         public String SequenceNumber { get; private set; }
 
@@ -50,6 +37,7 @@
         public MainViewModel()
         {
             Entries = new ThreadSafeObservableCollection<EntryViewModel>();
+            HexLines = new ThreadSafeObservableCollection<HexLineViewModel>();
 
             _clipboardListener.ClipboardUpdated += (s, e) => Refresh();
         }
@@ -97,9 +85,10 @@
 
         public void UpdateHexData()
         {
+            HexLines.Clear();
+
             if (null == _selectedEntry)
             {
-                HexData = "";
                 return;
             }
 
@@ -107,53 +96,23 @@
 
             if (0 == data.Length)
             {
-                HexData = "";
                 return;
             }
 
-            var chars = new Char[16];
+            var offset = 0;
 
-            var hexData = new StringBuilder();
-
-            var pos = 0;
-            for (;;)
+            var remaining = data.Length;
+            while (remaining > 0)
             {
-                var stringBuilder = new StringBuilder(128);
-                stringBuilder.AppendFormat("{0:X08}: ", pos);
+                var line = new Byte[Math.Min(remaining, 16)];
 
-                for (var i = 0; i < 16; i++)
-                {
-                    if (8 == i)
-                    {
-                        stringBuilder.Append("| ");
-                    }
+                Array.Copy(data, offset, line, 0, line.Length);
 
-                    if (pos < data.Length)
-                    {
-                        stringBuilder.AppendFormat("{0:X02} ", data[pos]);
-                        chars[i] = data[pos] > 31 ? (char)data[pos] : ' ';
-                        pos++;
-                    }
-                    else
-                    {
-                        stringBuilder.Append("   ");
-                        chars[i] = ' ';
-                    }
-                }
+                HexLines.Add(new HexLineViewModel(offset, line));
 
-                stringBuilder.Append(' ');
-                stringBuilder.Append(chars);
-                stringBuilder.Append(Environment.NewLine);
-
-                hexData.Append(stringBuilder);
-
-                if (pos >= data.Length)
-                {
-                    break;
-                }
+                offset += 16;
+                remaining -= 16;
             }
-
-            HexData = hexData.ToString();
         }
     }
 }

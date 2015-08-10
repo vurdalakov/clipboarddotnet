@@ -69,13 +69,33 @@
             </ListView.View>
         </ListView>
 
-        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding HexData}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" FontFamily="Courier New" />
-        
-        <!--<ScrollViewer Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <TextBox IsReadOnly="True" >
-                
-            </TextBox>
-        </ScrollViewer>-->
+        <ListView Grid.Row="2" Grid.Column="1" ItemsSource="{Binding HexLines}" FontFamily="Courier New">
+            <ListView.View>
+                <GridView AllowsColumnReorder="False">
+                    <GridViewColumn Header="Offset" Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Offset, StringFormat=X08}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Hex" Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Data, Converter={local:HexLineConverter}, ConverterParameter=1}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Text" Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Data, Converter={local:HexLineConverter}, ConverterParameter=0}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
 
         <StatusBar Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
             <StatusBarItem>

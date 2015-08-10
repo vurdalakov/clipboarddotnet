@@ -63,6 +63,8 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Compile Include="EntryViewModel.cs" />
+    <Compile Include="HexLineConverter.cs" />
+    <Compile Include="HexLineViewModel.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="Vurdalakov\ThreadSafeObservableCollection.cs" />
     <Compile Include="Vurdalakov\ViewModelBase.cs" />
