@@ -18,13 +18,31 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
-        <DockPanel Grid.Row="0" Grid.ColumnSpan="2">
+        <DockPanel Grid.Row="0">
             <ToolBarPanel DockPanel.Dock="Top">
                 <ToolBar ToolBarTray.IsLocked="True">
-                    <Button Margin="8,0,8,0" >
+                    <Menu ToolBar.OverflowMode="Never">
+                        <MenuItem Header="_File">
+                            <MenuItem Header="E_xit" Command="{Binding ExitCommand}" />
+                        </MenuItem>
+                        <MenuItem Header="_View">
+                            <MenuItem Header="_Refresh" Command="{Binding RefreshCommand}" />
+                        </MenuItem>
+                        <MenuItem Header="_Help">
+                            <MenuItem Header="_About" Command="{Binding AboutCommand}" />
+                        </MenuItem>
+                    </Menu>
+                </ToolBar>
+            </ToolBarPanel>
+        </DockPanel>
+
+        <DockPanel Grid.Row="1" Grid.ColumnSpan="2">
+            <ToolBarPanel DockPanel.Dock="Top">
+                <ToolBar ToolBarTray.IsLocked="True">
+                    <Button Margin="8,0,8,0" Command="{Binding RefreshCommand}">
                         <StackPanel Orientation="Horizontal">
                             <!--Image Source="Images/toolbar_refresh.png" Height="24"/-->
-                            <TextBlock Text="Refresh" VerticalAlignment="Center"/>
+                            <TextBlock Text="Refresh" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                 </ToolBar>

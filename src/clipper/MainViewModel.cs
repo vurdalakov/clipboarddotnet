@@ -1,9 +1,8 @@
 ﻿namespace Vurdalakov.ClipboardDotNet
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Windows.Controls;
+    using System.Windows;
+    using System.Windows.Input;
 
     public class MainViewModel : ViewModelBase, IHexLineDataSource
     {
@@ -40,6 +39,10 @@
             HexLines = new ThreadSafeObservableCollection<HexLineViewModel>();
 
             _clipboardListener.ClipboardUpdated += (s, e) => Refresh();
+
+            this.ExitCommand = new CommandBase(OnExitCommand);
+            this.RefreshCommand = new CommandBase(OnRefreshCommand);
+            this.AboutCommand = new CommandBase(OnAboutCommand);
         }
 
         public void OnLoaded()
@@ -119,6 +122,24 @@
             Array.Copy(_data, offset, line, 0, line.Length);
 
             return line;
+        }
+
+        public ICommand ExitCommand { get; private set; }
+        public void OnExitCommand()
+        {
+            Application.Current.Shutdown();
+        }
+
+        public ICommand RefreshCommand { get; private set; }
+        public void OnRefreshCommand()
+        {
+            Refresh();
+        }
+
+        public ICommand AboutCommand { get; private set; }
+        public void OnAboutCommand()
+        {
+            MessageBox.Show("Clipper 2.0\n\nCopyright @ 2015 Vurdalakov\n\nhttp://www.vurdalakov.net/\nvurdalakov@gmail.com", "About", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
