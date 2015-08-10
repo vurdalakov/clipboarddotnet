@@ -129,5 +129,10 @@ namespace Vurdalakov.ClipboardDotNet
                 clipboard.SetData(format, data);
             }
         }
+
+        static public UInt32 GetSequenceNumber()
+        {
+            return Win32Api.GetClipboardSequenceNumber();
+        }
     }
 }

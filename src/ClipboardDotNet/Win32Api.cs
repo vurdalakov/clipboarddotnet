@@ -65,6 +65,9 @@ namespace Vurdalakov.ClipboardDotNet
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr SetClipboardData(uint uFormat, IntPtr hMem);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern UInt32 GetClipboardSequenceNumber();
+
         [DllImport("kernel32.dll", SetLastError = true)]
         static public extern UInt32 GetOEMCP();
     }

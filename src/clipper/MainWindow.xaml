@@ -76,5 +76,14 @@
                 
             </TextBox>
         </ScrollViewer>-->
+
+        <StatusBar Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
+            <StatusBarItem>
+                <TextBlock Text="{Binding SequenceNumber}" />
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
+            </StatusBarItem>
+        </StatusBar>
+
     </Grid>
 </Window>

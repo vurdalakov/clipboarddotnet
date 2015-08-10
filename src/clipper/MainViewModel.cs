@@ -28,6 +28,8 @@
 
         public String HexData { get; private set; }
 
+        public String SequenceNumber { get; private set; }
+
         private ClipboardListener _clipboardListener = new ClipboardListener();
 
         public MainViewModel()
@@ -73,55 +75,66 @@
             {
                 SelectedEntry = Entries[selectedIndex];
             }
+
+            SequenceNumber = String.Format("Sequence number: {0}", Clipboard.GetSequenceNumber());
+            this.OnPropertyChanged(() => SequenceNumber);
         }
 
         public void UpdateHexData()
         {
-            var data = Clipboard.GetData(_selectedEntry.Format);
-
-            var chars = new Char[16];
-
-            var hexData = new StringBuilder();
-
-            var pos = 0;
-            for (;;)
+            if (null == _selectedEntry)
             {
-                var stringBuilder = new StringBuilder(128);
-                stringBuilder.AppendFormat("{0:X08}: ", pos);
+                HexData = "";
+            }
+            else
+            {
+                var data = Clipboard.GetData(_selectedEntry.Format);
 
-                for (var i = 0; i < 16; i++)
+                var chars = new Char[16];
+
+                var hexData = new StringBuilder();
+
+                var pos = 0;
+                for (;;)
                 {
-                    if (8 == i)
+                    var stringBuilder = new StringBuilder(128);
+                    stringBuilder.AppendFormat("{0:X08}: ", pos);
+
+                    for (var i = 0; i < 16; i++)
                     {
-                        stringBuilder.Append("| ");
+                        if (8 == i)
+                        {
+                            stringBuilder.Append("| ");
+                        }
+
+                        if (pos < data.Length)
+                        {
+                            stringBuilder.AppendFormat("{0:X02} ", data[pos]);
+                            chars[i] = data[pos] > 31 ? (char)data[pos] : ' ';
+                            pos++;
+                        }
+                        else
+                        {
+                            stringBuilder.Append("   ");
+                            chars[i] = ' ';
+                        }
                     }
 
-                    if (pos < data.Length)
+                    stringBuilder.Append(' ');
+                    stringBuilder.Append(chars);
+                    stringBuilder.Append(Environment.NewLine);
+
+                    hexData.Append(stringBuilder);
+
+                    if (pos >= data.Length)
                     {
-                        stringBuilder.AppendFormat("{0:X02} ", data[pos]);
-                        chars[i] = data[pos] > 31 ? (char)data[pos] : ' ';
-                        pos++;
-                    }
-                    else
-                    {
-                        stringBuilder.Append("   ");
-                        chars[i] = ' ';
+                        break;
                     }
                 }
 
-                stringBuilder.Append(' ');
-                stringBuilder.Append(chars);
-                stringBuilder.Append(Environment.NewLine);
-
-                hexData.Append(stringBuilder);
-
-                if (pos >= data.Length)
-                {
-                    break;
-                }
+                HexData = hexData.ToString();
             }
 
-            HexData = hexData.ToString();
             this.OnPropertyChanged(() => HexData);
         }
     }
