@@ -21,49 +21,45 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
-        <DockPanel Grid.Row="0">
-            <ToolBarPanel DockPanel.Dock="Top">
-                <ToolBar ToolBarTray.IsLocked="True">
-                    <Menu ToolBar.OverflowMode="Never">
-                        <MenuItem Header="_File">
-                            <MenuItem Header="_Save Clipboard..." Command="{Binding SaveCommand}" />
-                            <MenuItem Header="_Restore Clipboard..." Command="{Binding RestoreCommand}" />
-                            <Separator/>
-                            <MenuItem Header="Save Selected Format..." Command="{Binding SaveFormatCommand}" />
-                            <Separator/>
-                            <MenuItem Header="E_xit" Command="{Binding ExitCommand}" />
-                        </MenuItem>
-                        <MenuItem Header="_Edit">
-                            <MenuItem Header="_Empty Clipboard" Command="{Binding EmptyCommand}" />
-                        </MenuItem>
-                        <MenuItem Header="_View">
-                            <MenuItem Header="_Autodetect Format" Command="{Binding AsAutoCommand}" IsChecked="{Binding IsAutoFormat}" />
-                            <Separator/>
-                            <MenuItem Header="View As _Binary" Command="{Binding AsBinaryCommand}">
-                                <MenuItem.IsChecked>
-                                    <MultiBinding Converter="{StaticResource FormatCheckConverter}">
-                                        <Binding Path="IsAutoFormat" />
-                                        <Binding Path="IsBinaryFormat" />
-                                    </MultiBinding>
-                                </MenuItem.IsChecked>
-                            </MenuItem>
-                            <MenuItem Header="View As _Text" Command="{Binding AsTextCommand}">
-                                <MenuItem.IsChecked>
-                                    <MultiBinding Converter="{StaticResource FormatCheckConverter}">
-                                        <Binding Path="IsAutoFormat" />
-                                        <Binding Path="IsTextFormat" />
-                                    </MultiBinding>
-                                </MenuItem.IsChecked>
-                            </MenuItem>
-                            <Separator/>
-                            <MenuItem Header="_Refresh" Command="{Binding RefreshCommand}" />
-                        </MenuItem>
-                        <MenuItem Header="_Help">
-                            <MenuItem Header="_About..." Command="{Binding AboutCommand}" />
-                        </MenuItem>
-                    </Menu>
-                </ToolBar>
-            </ToolBarPanel>
+        <DockPanel Grid.Row="0" Grid.ColumnSpan="2">
+            <Menu>
+                <MenuItem Header="_File">
+                    <MenuItem Header="_Save Clipboard..." Command="{Binding SaveCommand}" />
+                    <MenuItem Header="_Restore Clipboard..." Command="{Binding RestoreCommand}" />
+                    <Separator/>
+                    <MenuItem Header="Save Selected Format..." Command="{Binding SaveFormatCommand}" />
+                    <Separator/>
+                    <MenuItem Header="E_xit" Command="{Binding ExitCommand}" />
+                </MenuItem>
+                <MenuItem Header="_Edit">
+                    <MenuItem Header="_Empty Clipboard" Command="{Binding EmptyCommand}" />
+                </MenuItem>
+                <MenuItem Header="_View">
+                    <MenuItem Header="_Autodetect Format" Command="{Binding AsAutoCommand}" IsChecked="{Binding IsAutoFormat}" />
+                    <Separator/>
+                    <MenuItem Header="View As _Binary" Command="{Binding AsBinaryCommand}">
+                        <MenuItem.IsChecked>
+                            <MultiBinding Converter="{StaticResource FormatCheckConverter}">
+                                <Binding Path="IsAutoFormat" />
+                                <Binding Path="IsBinaryFormat" />
+                            </MultiBinding>
+                        </MenuItem.IsChecked>
+                    </MenuItem>
+                    <MenuItem Header="View As _Text" Command="{Binding AsTextCommand}">
+                        <MenuItem.IsChecked>
+                            <MultiBinding Converter="{StaticResource FormatCheckConverter}">
+                                <Binding Path="IsAutoFormat" />
+                                <Binding Path="IsTextFormat" />
+                            </MultiBinding>
+                        </MenuItem.IsChecked>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="_Refresh" Command="{Binding RefreshCommand}" />
+                </MenuItem>
+                <MenuItem Header="_Help">
+                    <MenuItem Header="_About..." Command="{Binding AboutCommand}" />
+                </MenuItem>
+            </Menu>
         </DockPanel>
 
         <DockPanel Grid.Row="1" Grid.ColumnSpan="2">
