@@ -18,7 +18,8 @@
             }
 
             var name = Clipboard.GetFormatName(format);
-            return name.Equals("Rich Text Format", StringComparison.CurrentCultureIgnoreCase) || name.Equals("HTML Format", StringComparison.CurrentCultureIgnoreCase);
+            return name.Equals("Rich Text Format", StringComparison.CurrentCultureIgnoreCase) || name.Equals("HTML Format", StringComparison.CurrentCultureIgnoreCase) ||
+                 name.StartsWith("text/", StringComparison.CurrentCultureIgnoreCase);
         }
 
         static public String ExtractText(ClipboardFormats format, Byte[] data)
@@ -38,13 +39,18 @@
                     return Encoding.GetEncoding((int)Win32Api.GetOEMCP()).GetString(data, 0, data.Length - 1);
             }
 
-            var name = Clipboard.GetFormatName(format);
+            var name = Clipboard.GetFormatName(format).ToLower();
 
             switch (name)
             {
-                case "Rich Text Format":
-                case "HTML Format":
+                case "rich text format":
+                case "html format":
                     return Encoding.Default.GetString(data, 0, data.Length - 1);
+            }
+
+            if (name.StartsWith("text/"))
+            {
+                return Encoding.Unicode.GetString(data, 0, data.Length - 2);
             }
 
             return null;
