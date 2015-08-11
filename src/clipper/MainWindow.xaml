@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Vurdalakov.ClipboardDotNet"
         mc:Ignorable="d"
-        Title="Clipper 2" Height="600" Width="900">
+        Title="Clipper 2" Height="600" Width="900"
+        Icon="Images/application.ico">
     <Window.Resources>
         <local:FormatCheckConverter x:Key="FormatCheckConverter" />
     </Window.Resources>
