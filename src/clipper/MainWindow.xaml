@@ -115,6 +115,11 @@
         <ListView Grid.Row="2" Grid.Column="1" ItemsSource="{Binding HexLines}" FontFamily="Courier New" SelectionMode="Single" Visibility="{Binding IsTextFormat, Converter={StaticResource BooleanToVisibilityReverseConverter}}">
             <ListView.View>
                 <GridView AllowsColumnReorder="False">
+                    <GridView.ColumnHeaderContainerStyle>
+                        <Style>
+                            <Setter Property="FrameworkElement.Visibility" Value="Collapsed" />
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
                     <GridViewColumn Header="Offset" Width="Auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
