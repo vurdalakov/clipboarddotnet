@@ -5,7 +5,13 @@
              xmlns:vurdalakov="clr-namespace:Vurdalakov"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <vurdalakov:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <vurdalakov:BooleanToVisibilityConverter Reverse="True" x:Key="BooleanToVisibilityReverseConverter" />
+        <ResourceDictionary>
+            <vurdalakov:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <vurdalakov:BooleanToVisibilityConverter Reverse="True" x:Key="BooleanToVisibilityReverseConverter" />
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Vurdalakov/GeneralResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

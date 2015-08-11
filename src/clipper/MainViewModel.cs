@@ -304,7 +304,9 @@
         public ICommand AboutCommand { get; private set; }
         public void OnAboutCommand()
         {
-            MessageBox.Show("Clipper 2.0\n\nCopyright @ 1997, 2015 Vurdalakov\n\nhttp://www.vurdalakov.net/\nvurdalakov@gmail.com", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+            var aboutWindow = new AboutWindow();
+            aboutWindow.DataContext = this;
+            aboutWindow.ShowDialog();
         }
     }
 }

@@ -67,6 +67,9 @@
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EntryViewModel.cs" />
     <Compile Include="FormatCheckConverter.cs" />
     <Compile Include="HexLineConverter.cs" />
@@ -77,6 +80,10 @@
     <Compile Include="Vurdalakov\CommandBaseGeneric.cs" />
     <Compile Include="Vurdalakov\ThreadSafeObservableCollection.cs" />
     <Compile Include="Vurdalakov\ViewModelBase.cs" />
+    <Page Include="AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -89,6 +96,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Vurdalakov\GeneralResourceDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -125,6 +136,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\application.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\application.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

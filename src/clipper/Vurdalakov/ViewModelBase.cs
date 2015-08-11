@@ -2,16 +2,18 @@
 {
     using System;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.Linq.Expressions;
     using System.Reflection;
     using System.Threading;
-    using System.Windows;
+    using System.Windows.Input;
     using System.Windows.Threading;
 
     public class ViewModelBase : INotifyPropertyChanged
     {
         public ViewModelBase()
         {
+            OpenButtonLinkCommand = new CommandBase<String>(OnOpenButtonLinkCommand);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -63,6 +65,21 @@
             else
             {
                 action();
+            }
+        }
+
+        public ICommand OpenButtonLinkCommand { get; private set; }
+        public void OnOpenButtonLinkCommand(String url)
+        {
+            Process.Start(url);
+        }
+
+        public String ApplicationVersion
+        {
+            get
+            {
+                var parts = Assembly.GetExecutingAssembly().FullName.Split(',');
+                return parts[1].Split('=')[1];
             }
         }
     }
