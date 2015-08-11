@@ -2,16 +2,12 @@
 {
     using System;
 
-    public class ClipboardEntry
+    public class ClipboardEntry : ClipboardFormat
     {
-        public UInt16 Format { get; private set; }
-        public String Name { get; private set; }
         public UInt64 DataSize { get; private set; }
 
-        public ClipboardEntry(UInt16 format, String name, UInt64 dataSize)
+        public ClipboardEntry(UInt16 id, String name, UInt64 dataSize) : base(id, name)
         {
-            Format = format;
-            Name = name;
             DataSize = dataSize;
         }
     }

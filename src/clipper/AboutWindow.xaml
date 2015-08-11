@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Vurdalakov.ClipboardDotNet"
         mc:Ignorable="d"
         Title="About" Height="300" Width="400"
-        Icon="Images\application.ico" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+        ResizeMode="NoResize" WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

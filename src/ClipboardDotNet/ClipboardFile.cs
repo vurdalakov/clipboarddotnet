@@ -31,10 +31,10 @@
             String text = null;
             reader.EntryRead += (s, e) =>
             {
-                if (ClipboardText.IsTextFormat(e.Entry.Format))
+                if (ClipboardText.IsTextFormat(e.Entry.Id))
                 {
                     var data = reader.ReadData();
-                    text = ClipboardText.ExtractText(e.Entry.Format, data);
+                    text = ClipboardText.ExtractText(e.Entry.Id, data);
                     e.Cancel = true;
                 }
             };
@@ -55,7 +55,7 @@
                 reader.EntryRead += (s, e) =>
                 {
                     var data = reader.ReadData();
-                    clipboard.SetData(e.Entry.Format, data);
+                    clipboard.SetData(e.Entry.Id, data);
                 };
 
                 reader.Read(fileName);
@@ -76,7 +76,7 @@
 
                 if (entry.DataSize > UInt32.MaxValue)
                 {
-                    throw new InvalidOperationException(String.Format("Clipboard format {0} ({1}) data is too big to be saved in CLP format ({2:D} bytes)", entry.Format, entry.Name, entry.DataSize));
+                    throw new InvalidOperationException(String.Format("Clipboard format {0} ({1}) data is too big to be saved in CLP format ({2:D} bytes)", entry.Id, entry.Name, entry.DataSize));
                 }
             }
 
@@ -97,7 +97,7 @@
                                 continue;
                             }
 
-                            binaryWriter.Write(entry.Format);
+                            binaryWriter.Write(entry.Id);
                             binaryWriter.Write(Convert.ToUInt32(entry.DataSize & 0xFFFFFFFF));
                             binaryWriter.Write(offset);
 
@@ -117,7 +117,7 @@
                                 continue;
                             }
 
-                            var data = Clipboard.GetData(entry.Format);
+                            var data = Clipboard.GetData(entry.Id);
 
                             binaryWriter.Write(data);
                         }

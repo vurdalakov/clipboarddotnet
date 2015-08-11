@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="Clipboard.cs" />
     <Compile Include="ClipboardApi.cs" />
+    <Compile Include="ClipboardFormat.cs" />
     <Compile Include="ClipboardEntry.cs" />
     <Compile Include="ClipboardApiException.cs" />
     <Compile Include="ClipboardFile.cs" />

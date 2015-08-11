@@ -84,7 +84,7 @@
             {
                 Entries.Add(new EntryViewModel(entry));
 
-                if (entry.Format == selectedFormat)
+                if (entry.Id == selectedFormat)
                 {
                     selectedIndex = Entries.Count - 1;
                 }

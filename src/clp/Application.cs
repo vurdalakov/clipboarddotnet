@@ -23,7 +23,7 @@
 
                 foreach (var entry in entries)
                 {
-                    Console.WriteLine("{0,5} {1,5} {2}", entry.Format, entry.DataSize, entry.Name);
+                    Console.WriteLine("{0,5} {1,5} {2}", entry.Id, entry.DataSize, entry.Name);
                 }
             }
             else if (_commandLineParser.IsOptionSet("t", "text"))
