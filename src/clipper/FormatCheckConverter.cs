@@ -13,8 +13,7 @@
 
         public Object[] ConvertBack(Object value, Type[] targetTypes, Object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return new Object[0];
         }
     }
 }
-

@@ -66,12 +66,25 @@
         <DockPanel Grid.Row="1" Grid.ColumnSpan="2">
             <ToolBarPanel DockPanel.Dock="Top">
                 <ToolBar ToolBarTray.IsLocked="True">
-                    <Button Margin="8,0,8,0" Command="{Binding RefreshCommand}">
-                        <StackPanel Orientation="Horizontal">
-                            <!--Image Source="Images/toolbar_refresh.png" Height="24"/-->
-                            <TextBlock Text="Refresh" VerticalAlignment="Center" />
-                        </StackPanel>
-                    </Button>
+                    <Button Content="Empty" Margin="8,0,8,0" Command="{Binding EmptyCommand}" />
+                    <Separator />
+                    <RadioButton Content="Autodetect" Margin="8,0,8,0" Command="{Binding AsAutoCommand}" IsChecked="{Binding IsAutoFormat, Mode=OneWay}" />
+                    <RadioButton Content="As Binary" Margin="8,0,8,0" Command="{Binding AsBinaryCommand}">
+                        <RadioButton.IsChecked>
+                            <MultiBinding Converter="{StaticResource FormatCheckConverter}">
+                                <Binding Path="IsAutoFormat" Mode="OneWay" />
+                                <Binding Path="IsBinaryFormat" Mode="OneWay" />
+                            </MultiBinding>
+                        </RadioButton.IsChecked>
+                    </RadioButton>
+                    <RadioButton Content="As Text" Margin="8,0,8,0" Command="{Binding AsTextCommand}">
+                        <RadioButton.IsChecked>
+                            <MultiBinding Converter="{StaticResource FormatCheckConverter}">
+                                <Binding Path="IsAutoFormat" Mode="OneWay" />
+                                <Binding Path="IsTextFormat" Mode="OneWay" />
+                            </MultiBinding>
+                        </RadioButton.IsChecked>
+                    </RadioButton>
                 </ToolBar>
             </ToolBarPanel>
         </DockPanel>
