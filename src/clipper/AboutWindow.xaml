@@ -21,7 +21,8 @@
 
         <StackPanel Grid.Column="1" Grid.RowSpan="2">
             <TextBlock Text="Clipper" FontWeight="SemiBold" FontSize="16" HorizontalAlignment="Center" Margin="0,8,0,8" />
-            <TextBlock HorizontalAlignment="Center">
+            <TextBlock Text="Yet another Windows Clipboard viewer application" HorizontalAlignment="Center" />
+            <TextBlock HorizontalAlignment="Center" Margin="0,8,0,0">
                 <Run Text="Version" />
                 <Run Text="{Binding ApplicationVersion, Mode=OneTime}" />
             </TextBlock>

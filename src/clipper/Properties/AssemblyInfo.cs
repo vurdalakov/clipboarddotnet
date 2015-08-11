@@ -8,7 +8,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("clipper")]
-[assembly: AssemblyDescription("Windows Clipboard viewer application")]
+[assembly: AssemblyDescription("Yet another Windows Clipboard viewer application")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Vurdalakov")]
 [assembly: AssemblyProduct("clipper")]
