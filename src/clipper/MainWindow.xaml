@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:Vurdalakov.ClipboardDotNet"
         mc:Ignorable="d"
         Title="Clipper 2" Height="600" Width="900">
+    <Window.Resources>
+        <local:FormatCheckConverter x:Key="FormatCheckConverter" />
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -34,6 +37,25 @@
                             <MenuItem Header="_Empty Clipboard" Command="{Binding EmptyCommand}" />
                         </MenuItem>
                         <MenuItem Header="_View">
+                            <MenuItem Header="_Autodetect Format" Command="{Binding AsAutoCommand}" IsChecked="{Binding IsAutoFormat}" />
+                            <Separator/>
+                            <MenuItem Header="View As _Binary" Command="{Binding AsBinaryCommand}">
+                                <MenuItem.IsChecked>
+                                    <MultiBinding Converter="{StaticResource FormatCheckConverter}">
+                                        <Binding Path="IsAutoFormat" />
+                                        <Binding Path="IsBinaryFormat" />
+                                    </MultiBinding>
+                                </MenuItem.IsChecked>
+                            </MenuItem>
+                            <MenuItem Header="View As _Text" Command="{Binding AsTextCommand}">
+                                <MenuItem.IsChecked>
+                                    <MultiBinding Converter="{StaticResource FormatCheckConverter}">
+                                        <Binding Path="IsAutoFormat" />
+                                        <Binding Path="IsTextFormat" />
+                                    </MultiBinding>
+                                </MenuItem.IsChecked>
+                            </MenuItem>
+                            <Separator/>
                             <MenuItem Header="_Refresh" Command="{Binding RefreshCommand}" />
                         </MenuItem>
                         <MenuItem Header="_Help">

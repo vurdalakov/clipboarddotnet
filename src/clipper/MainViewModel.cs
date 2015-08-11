@@ -24,15 +24,10 @@
                     _selectedEntry = value;
                     this.OnPropertyChanged(() => SelectedEntry);
 
-                    IsTextFormat = (_selectedEntry != null) && ClipboardText.IsTextFormat(_selectedEntry.Format);
-                    this.OnPropertyChanged(() => IsTextFormat);
-
-                    UpdateData();
+                    UpdateFormat();
                 }
             }
         }
-
-        public Boolean IsTextFormat { get; private set; }
 
         public ThreadSafeObservableCollection<HexLineViewModel> HexLines { get; private set; }
         public String Text { get; private set; }
@@ -46,6 +41,8 @@
             Entries = new ThreadSafeObservableCollection<EntryViewModel>();
             HexLines = new ThreadSafeObservableCollection<HexLineViewModel>();
 
+            IsAutoFormat = true;
+
             _clipboardListener.ClipboardUpdated += (s, e) => Refresh();
 
             this.SaveCommand = new CommandBase(OnSaveCommand);
@@ -54,6 +51,9 @@
             this.ExitCommand = new CommandBase(OnExitCommand);
             this.CopyCommand = new CommandBase<String>(OnCopyCommand);
             this.EmptyCommand = new CommandBase(OnEmptyCommand);
+            this.AsAutoCommand = new CommandBase(OnAsAutoCommand);
+            this.AsBinaryCommand = new CommandBase(OnAsBinaryCommand);
+            this.AsTextCommand = new CommandBase(OnAsTextCommand);
             this.RefreshCommand = new CommandBase(OnRefreshCommand);
             this.AboutCommand = new CommandBase(OnAboutCommand);
         }
@@ -99,6 +99,27 @@
             this.OnPropertyChanged(() => SequenceNumber);
         }
 
+        public Boolean IsAutoFormat { get; private set; }
+        public Boolean IsTextFormat { get; private set; }
+        public Boolean IsBinaryFormat { get; private set; }
+
+        private void UpdateFormat()
+        {
+            if (IsAutoFormat)
+            {
+                IsTextFormat = (_selectedEntry != null) && ClipboardText.IsTextFormat(_selectedEntry.Format);
+
+                IsBinaryFormat = !IsTextFormat;
+                this.OnPropertyChanged(() => IsBinaryFormat);
+            }
+
+            this.OnPropertyChanged(() => IsAutoFormat);
+            this.OnPropertyChanged(() => IsBinaryFormat);
+            this.OnPropertyChanged(() => IsTextFormat);
+
+            UpdateData();
+        }
+
         private Byte[] _data;
 
         private void UpdateData()
@@ -118,13 +139,12 @@
                 return;
             }
 
-            if (IsTextFormat)
+            if (IsTextFormat && ClipboardText.IsTextFormat(_selectedEntry.Format))
             {
                 var data = Clipboard.GetData(_selectedEntry.Format);
                 Text = ClipboardText.ExtractText(_selectedEntry.Format, data);
-                OnPropertyChanged(() => Text);
             }
-            else
+            else if (IsBinaryFormat)
             {
                 var offset = 0;
 
@@ -137,6 +157,8 @@
                     remaining -= 16;
                 }
             }
+
+            OnPropertyChanged(() => Text);
         }
 
         public Byte[] GetData(Int32 offset)
@@ -246,6 +268,31 @@
         public void OnEmptyCommand()
         {
             Clipboard.Empty();
+        }
+
+        public ICommand AsAutoCommand { get; private set; }
+        public void OnAsAutoCommand()
+        {
+            IsAutoFormat = true;
+            UpdateFormat();
+        }
+
+        public ICommand AsBinaryCommand { get; private set; }
+        public void OnAsBinaryCommand()
+        {
+            IsAutoFormat = false;
+            IsBinaryFormat = true;
+            IsTextFormat = false;
+            UpdateFormat();
+        }
+
+        public ICommand AsTextCommand { get; private set; }
+        public void OnAsTextCommand()
+        {
+            IsAutoFormat = false;
+            IsBinaryFormat = false;
+            IsTextFormat = true;
+            UpdateFormat();
         }
 
         public ICommand RefreshCommand { get; private set; }
