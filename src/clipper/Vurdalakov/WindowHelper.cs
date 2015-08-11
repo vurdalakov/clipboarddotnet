@@ -7,7 +7,8 @@
 
     public static class WindowHelper
     {
-        // http://stackoverflow.com/questions/2341230/removing-icon-from-a-wpf-window
+        #region RemoveIcon
+
         public static void RemoveIcon(Window window)
         {
             if (null == window)
@@ -31,25 +32,65 @@
             RemoveIcon(sender as Window);
         }
 
-        const Int32 GWL_EXSTYLE = -20;
-        const Int32 WS_EX_DLGMODALFRAME = 0x0001;
-        const Int32 SWP_NOSIZE = 0x0001;
-        const Int32 SWP_NOMOVE = 0x0002;
-        const Int32 SWP_NOZORDER = 0x0004;
-        const Int32 SWP_NOACTIVATE = 0x0010;
-        const Int32 SWP_FRAMECHANGED = 0x0020;
-        const UInt32 WM_SETICON = 0x0080;
+        #endregion
+
+        #region RemoveMinimizeAndMaximizeBoxes
+
+        public static void RemoveMinimizeAndMaximizeBoxes(Window window, Boolean removeMinimizeBox, Boolean removeMaximizeBox)
+        {
+            if (null == window)
+            {
+                return;
+            }
+
+            var styleBits = (removeMinimizeBox ? WS_MINIMIZEBOX : 0) | (removeMaximizeBox ? WS_MAXIMIZEBOX : 0);
+
+            var hWnd = new WindowInteropHelper(window).Handle;
+
+            var style = GetWindowLong(hWnd, GWL_STYLE);
+            SetWindowLong(hWnd, GWL_STYLE, (int)(style & ~(styleBits)));
+
+            SetWindowPos(hWnd, IntPtr.Zero, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
+        }
+
+        public static void RemoveMinimizeAndMaximizeBoxes(Object sender, Boolean removeMinimizeBox, Boolean removeMaximizeBox)
+        {
+            RemoveMinimizeAndMaximizeBoxes(sender as Window, removeMinimizeBox, removeMaximizeBox);
+        }
+
+        public static void RemoveMinimizeAndMaximizeBoxes(Object sender, EventArgs e)
+        {
+            RemoveMinimizeAndMaximizeBoxes(sender as Window, true, true);
+        }
+
+        #endregion
+
+        #region Win32 API Interop
+
+        private const Int32 GWL_STYLE = -16;
+        private const Int32 GWL_EXSTYLE = -20;
+        private const Int32 WS_MAXIMIZEBOX = 0x10000;
+        private const Int32 WS_MINIMIZEBOX = 0x20000;
+        private const Int32 WS_EX_DLGMODALFRAME = 0x0001;
+        private const Int32 SWP_NOSIZE = 0x0001;
+        private const Int32 SWP_NOMOVE = 0x0002;
+        private const Int32 SWP_NOZORDER = 0x0004;
+        private const Int32 SWP_NOACTIVATE = 0x0010;
+        private const Int32 SWP_FRAMECHANGED = 0x0020;
+        private const UInt32 WM_SETICON = 0x0080;
 
         [DllImport("user32.dll", SetLastError = true)]
-        static extern Int32 GetWindowLong(IntPtr hWnd, Int32 nIndex);
+        private static extern Int32 GetWindowLong(IntPtr hWnd, Int32 nIndex);
 
         [DllImport("user32.dll", SetLastError = true)]
-        static extern Int32 SetWindowLong(IntPtr hWnd, Int32 nIndex, Int32 dwNewLong);
+        private static extern Int32 SetWindowLong(IntPtr hWnd, Int32 nIndex, Int32 dwNewLong);
 
         [DllImport("user32.dll", SetLastError = true)]
-        static extern Boolean SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, Int32 x, Int32 y, Int32 cx, Int32 cy, UInt32 uFlags);
+        private static extern Boolean SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, Int32 x, Int32 y, Int32 cx, Int32 cy, UInt32 uFlags);
 
         [DllImport("user32.dll", SetLastError = true)]
-        static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
+        private static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
+
+        #endregion
     }
 }
